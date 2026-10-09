@@ -18,9 +18,9 @@ class Node {
 };
 
 class LinkedList {
-  Node* head;
-
   public:
+    Node* head;
+
     LinkedList() {
       head = NULL;
     }
@@ -28,14 +28,14 @@ class LinkedList {
     void append(int val) {
       Node* newNode = new Node(val);
       if (head == NULL) {
-        head = new Node(val);
+        head = newNode;
         return;
       }
       Node* curr = head;
       while (curr->next != NULL) {
         curr = curr->next;
       }
-      curr->next = new Node(val);
+      curr->next = newNode;
     }
 
     void print() {
@@ -72,6 +72,19 @@ class LinkedList {
       }
       return delete_helper(val, head);
     }
+
+    Node* reverse_helper(Node* start) {
+      if (start == NULL) return NULL;
+      if (start->next == NULL) return start;
+      Node* new_head = reverse_helper(start->next);
+      start->next->next = start;
+      start->next = NULL;
+      return new_head;
+    }
+
+    void reverse() {
+      head = reverse_helper(head);
+    }
 };
 
 int main() {
@@ -85,5 +98,8 @@ int main() {
   list.delete_item(6);
   list.delete_item(7);
 
+  list.print();
+
+  list.reverse();
   list.print();
 };
