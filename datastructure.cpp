@@ -53,6 +53,20 @@ class LinkedList {
     }
 };
 
+class Stack {
+  public:
+    LinkedList stack;
+
+    void push(int val) {
+      stack.insertAtHead(val);
+    }
+
+    int pop() {
+      Node* top = stack.deleteAtHead();
+      return top->data;
+    }
+};
+
 int main() {
   LinkedList list;
   list.print();
@@ -63,4 +77,10 @@ int main() {
   Node* deleted = list.deleteAtHead();
   std::cout << deleted->data << std::endl;
   list.print();
+
+  Stack stack;
+  for (int i = 100; i < 120; i++) {
+    stack.push(i);
+  }
+  std::cout << stack.pop() << std::endl;
 }
