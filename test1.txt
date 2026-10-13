@@ -1,0 +1,127 @@
+1.1:
+	"a programmer who uses Stack ADT must know whether it is implemented with an array or a linked list."
+	False. The ADT provides interfaces for data manipulation, but the underlying implementation is hidden from the user.
+
+1.2:
+	"Give two different implementations of the list ADT and state one advantage of each.
+	Array: random access via index and compact memory.
+	Singly linked list: flexible size, inserting and deleting at head is O(1) and general insertion is faster than array.
+
+2.1:
+	From {10, 20, 30, 40, 50} delete the element at index 1. How many elements move? Show the final array.
+	3 elements move left. Final: {10, 30, 40, 50} size 4
+
+2.2:
+	Count the exact number of shifts needed to insert at index 0 of an array holding n elements. then do the same for inserting at the end.
+	n elements must shift when inseting at head. 0 elements need to shift when inserting at end.
+
+2.3:
+	Give three reasons why we need a linked list when array already exist.
+	1. dynamic sizing
+	2. fast insertion and deletion
+	3. no need for large contiguous memory, nodes can be anywhere in the heap
+
+3.1:
+	Start with head->5->8->12->NULL. Apply in order: (1) insertAtHead(3), (2) insertAtTail(20), (3) delete the first node, (4) insert 9 after the node containing 8. Draw the final list.
+	(1) head->3->5->8->12->NULL
+	(2) head->3->5->8->12->20->NULL
+	(3) head->5->8->12->20->NULL
+	(4) head->5->8->9->12->20->NULL
+
+3.2:
+	Write Node* insertAtTail(Node* head, int x)
+	```
+	Node* insertAtTail(Node* head, int x) {
+		Node* newNode = new Node(x);
+		if (head == NULL) return newNode;
+		Node* cur = head;
+		while (cur->next != NULL) {
+			cur = cur->next;
+		}
+		cur->next = newNode;
+		return head;
+	}
+	```
+
+3.3:
+	Write int indexOf(Node* head, int key) that returns the 0-based position of the first node containing key, or -1 if absent.
+	```
+	int indexOf(Node* head, int key) {
+		int pos = 0;
+		if (head == NULL) return -1;
+		Node* cur = head;
+		while (cur->next != NULL) {
+			if (cur->data == key) return pos;
+			cur = cur->next;
+			pos++;
+		}
+		return -1;
+	}
+	```
+3.4:
+	The following code is meant to insert 7 at the head. Find the bug and fix it.
+	```
+	Node* n = new Node(7);
+	head = n;
+	n->next = head;
+	```
+	head = n is done before n->next is done, so head-next points to head.
+	fix
+	```
+	Node* n = new Node(7);
+	n->next = head;
+	head = n;
+	```
+
+3.5:
+	Write Node* deleteLast() that removes the last node and returns the head.
+	```
+	Node* deleteLast() {
+		if (head == NULL) return NULL;
+		if (head->next == NULL) {
+			delete head;
+			return NULL;
+		}
+		Node* cur = head;
+		while (cur->next->next != NULL) {
+			cur = cur->next;
+		}
+		delete cur->next;
+		cur->next == NULL;
+		return head;
+	}
+	```
+
+3.6:
+	Write Node* deleteAt(int k) that deletes node at 0-based position k. if k is out of range the list stays unchanged.
+	```
+	Node* deleteAt(int k) ,
+		if (head == NULL || k < 0) return head;
+		if (k == 0) {
+			Node* t = head;
+			head = head->next;
+			delete t;
+			return head;
+		}
+		Node* cur = head;
+		for (int i = 0; i < k - 1 && cur->next != NULL; i++) {
+			cur = cur->next;
+		}
+		if (cur->next == NULL) return head;
+		Node* t = cur->next;
+		cur->next = t->next;
+		delete t;
+		return head;
+	}
+	```
+
+3.7:
+	For the list 2->5->9->12->15, where does cur stop? why does the order of te two conditions matter?
+	```
+	Node* cur = head;
+	while (cur != NULL && cur->data < 10) {
+		cur = cur->next;
+	}
+	```
+	cur stops at Node 12. conditional matters because cur->data will return an error if the list only had 2->5->9 as its elements since it's trying to dereference a NULL pointer.
+
