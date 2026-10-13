@@ -123,5 +123,87 @@
 		cur = cur->next;
 	}
 	```
-	cur stops at Node 12. conditional matters because cur->data will return an error if the list only had 2->5->9 as its elements since it's trying to dereference a NULL pointer.
+	cur stops at Node 12. Conditional matters because cur->data will return an error if the list only had 2->5->9 as its elements since it's trying to dereference a NULL pointer.
 
+4.1:
+  start with an empty stack and perform: push(5), push(8), pop(), push(2), push(9), pop(), pop(). What does each pop return, and what is left.
+  1. 5
+  2. 5, 8
+  3. 5 (return 8)
+  4. 5, 2
+  5. 5, 2, 9
+  6. 5, 2 (return 9)
+  7. 5 (return 2)
+
+4.2:
+  An array stack has MAX_SIZE=5 and top=-1. (a) What is top after 3 pushes? (b) How many pushes succeed before overflow? (c) What is top after 5 pushes and then 5 pops? (d) What happens on one more pop?
+  (a) top=2
+  (b) 5
+  (c) -1
+  (d) error (underflow)
+
+4.3:
+  Linked-list stack. Write void push(int x) and int pop() (print "Underflow" and return -1 if empty). The stack top is the head of the list.
+  ```
+  void push(int x) {
+      Node* n = new Node(x);
+      n->next = *head;
+      *head = n;
+    }
+
+  int pop() {
+      if (*head == NULL) return -1;
+      Node *h = *head;
+      int v = h->data;
+      *head = h->next;
+      delete h;
+      return v;
+    }
+    ```
+
+4.4:
+  In a singly linked-list stack, why do we use the head of the list as the top rather than the last node?
+  Because inserting at head for a singly linked-list is O(1) which is faster than the O(n) at the tail.
+
+4.5:
+  Compare the array and linked-list implementations of a stack. Give two points each.
+
+  Array:
+    - fixed size.
+    - More compact memory size.
+  Linked-list:
+    - Dynamic size.
+    - Fast insertion and deletion.
+    - each element takes more memory.
+
+5.1
+  What does g(5) return
+  ````
+  int g(int n) {
+      if (n <= 1) return 1;
+      return 2 * g(n - 1);
+    }
+  ````
+  g(5) = 16
+
+5.2:
+  What are the outputs of up(4) and down(4)? Explain the difference.
+  ````
+  void up(int n) { if (n == 0) return; up(n - 1); printf("%d ", n); }
+  void down(int n) { if (n == 0) return; printf("%d ", n); down(n - 1); }
+  ````
+  up(4) prints 1 2 3 4
+  down(4) prints 4 3 2 1
+  the order of printf() matters which order it prints.
+
+5.3:
+  What is wrong with each function?
+  ````
+  int a(int n) { return n + a(n - 1); }
+  int b(int n) { if (n == 0) return 0; return n + b(n + 1); }
+  ````
+  a() does not have a base case.
+  b() never reaches the base case for all n >= 1.
+
+5.4:
+  Write a recursive int maxArr(int a[], int n) that returns the largest of the first n elements (n >= 1).
