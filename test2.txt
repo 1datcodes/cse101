@@ -117,3 +117,33 @@ Binary Max Heap:
         - Parent: i/2 (integer division), valid when i > 1 (the root has no parent)
         - Left child: 2 * i, valid when 2i <= n
         - Right child: 2 * i + 1, valid when 2i + 1 <= n
+    Time complexity:
+      - findMax: read a[1], O(1) time
+      - insert: swim climbs at most the height log_2(n), O(logn) worst case, O(1) if the new key is small
+      - extractMax: sink descends at most log_2(n), O(logn)
+
+Practice 4:
+  1: Which of these arrays (root at index 1) are valid max-heaps?
+    (a) {50, 30, 40, 10, 20, 35}  yes, 50 > 30, 40; 30 > 10, 20; 40 > 35
+    (b) {50, 30, 40, 10, 45}      no, 50 > 30, 40; 30 !> 10, 45; 40 has no child
+  2: In a heap with n = 11 elements:
+    (a) What is the parent of the node at index 9?
+      - parent = i / 2 --> 9 / 2 = 4
+    (b) Which indices are leaves?
+      - indices 6~11 are all leaves; last internal node is 11 / 2 = 5
+    (c) How many levels does the heap have?
+      - 4 levels
+  3: Insert 85 into the max-heap {90, 70, 80, 40, 60, 50, 30} using swim. Show the array after each swap
+    - {90, 70, 80, 40, 60, 50, 30, 85} append at the end; 85 is under 40
+    - {90, 70, 80, 85, 60, 50, 30, 40} swap with 40 since 85 > 40; 85 is under 70
+    - {90, 85, 80, 70, 60, 50, 30, 40} swap with 70 since 85 > 70; 85 is under 90 -> sorted
+  4: Perform extractMax() on {90, 85, 80, 70, 60, 50, 30, 40}. Give the returned value and final array
+    - {40, 85, 80, 70, 60, 50, 30} return a[1] = 90, then swap with the last element 40
+    - {85, 40, 80, 70, 60, 50, 30} 40 swaps with 85; child 70, 60
+    - {85, 70, 80, 40, 60, 50, 30} 40 swaps with 70; no more child
+  5: What is the maximum number of swaps when inserting into a heap that already has 1000 elements?
+    - Max number of swap is floor(log_2(n)) = floor(log_2(1000)) = 9. It can swim at most 9 levels
+  6: In a max-heap with n elements, where can the minimum element be? Why does a findMin operation therefore cost O(n)?
+    - Since max-heap only care about parent-child relation and not sibling relations, left or right child can be the smallest. Therefore a divide and conquer approach is dangerous. Minimum is always a leaf node and there are about n/2 leaves therefore finding minimum will require O(n) time.
+
+BuildHeap and Heapsort:
