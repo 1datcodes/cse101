@@ -37,3 +37,32 @@ Practice 1:
     - because selection sort must span the entire unsorted array for the minimum, but insertion sort only needs to find the correct position for the key.
 
 Binary Search:
+  Divide and conquer search algorithm. Relies on a sorted array to work.
+  Time complexity:
+    Each call does at most 2 comparisons and one computation. Each recursive call works on about half of the range: n/2, n/4, n/8... until 1 element remains.
+    Therefore the total runtime is about Log_2(n) or O(logn) time in the worst case. Best case it is O(1) when the key is exactly at the half point of the array.
+    O(logn) means doubling the array would mean adding only one more probe meaning this search works best with data that scales fast.
+    Max Runtime: log_2(n) + 1
+
+Practice 2:
+  1: Trace binarySearch on a = {3, 9, 14, 20, 27, 31, 40} for key 31. List each call as (low, high, mid) and what it does.
+    - (0, 6, 3) 20 < 31, continue search on right half.
+    - (4, 6, 5) 31 == 31 return 5
+  2: Same array, key 5 (not present). List the calls and the returned value
+    - (0, 6, 3) 20 > 5, go left
+    - (0, 2, 1) 9 > 5, go left
+    - (0, 0, 0) 3 < 5, go right
+    - (1, 0, 0) return -1
+  3: What is the maximum number of elements that binary search inspects for n = 1,000,000? And for n = 2,000,000?
+    - log_2(1,000,000)+1 ~ 20
+    - log_2(2,000m000)+1 ~ 21
+  4: Write the recurrence for the worst-case time of recursive binary search and solve it by repeated halving.
+    - T(n) = T(n/2) + c = T(n/4) + 2c = T(n/8) + 3c = ... = T(n/2^k) + kc. T(n) = 1 + clog_2(n) = O(logn)
+  5: A student changes the right-half call to `binarySearch(a, mid, high, key)` (without +1). What can go wrong?
+    - If the key is not in the array, the program could run forever without running into the base case.
+    - The range may never shrink.
+  6: Why can't we use binary search on {9, 2, 7, 1, 5}?
+    - Because BS relies on a sorted array to navigate
+
+Priority Queues:
+  
