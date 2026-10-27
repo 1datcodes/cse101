@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 const int MAX = 100;
@@ -8,6 +9,10 @@ class MaxHeap {
     int a[MAX + 1];
     int n;
     MaxHeap() { n = 0; }
+    MaxHeap(int arr[], int size) {
+      copy(arr, arr + size, a + 1);
+      n = size;
+    }
 
     void swapAt(int i, int j) {
       int t = a[i]; a[i] = a[j]; a[j] = t;
@@ -59,7 +64,41 @@ class MaxHeap {
       sink(1); // 2. repair the order
       return mx; // return the max element
     }
+
+    void buildHeap() {
+      for (int i = n; i >= 1; i--) {
+        sink(i);
+      }
+    }
 };
+
+
+void printArr(int arr[], int size) {
+  if (size <= 1) { cout << "Heap empty\n"; return; } 
+  for (int i = 1; i <= size; i++) {
+    cout << arr[i] << " ";
+  }
+  cout << endl;
+}
+
+void sink(int a[], int i, int n) {
+  int c = 2 * i;
+  if (c > n) return;
+  if (c + 1 <= n && a[c + 1] > a[c]) c++;
+  if (a[i] >= a[c]) return;
+  int t = a[i]; a[i] = a[c]; a[c] = t;
+  sink(a, c, n);
+}
+
+void heapSort(int a[], int n) {
+  for (int i = n; i >= 1; i--) {
+    sink(a, i, n);
+  }
+  for (int last = n; last >= 2; last--) {
+    int t = a[1]; a[1] = a[last]; a[last] = t;
+    sink(a, 1, last - 1);
+  }
+}
 
 int main() {
   MaxHeap* h = new MaxHeap();
@@ -75,4 +114,12 @@ int main() {
   h->print();
   cout << h->extractMax() << endl;
   h->print();
+
+  int arr[7] = {4, 1, 3, 2, 16, 9, 10};
+  MaxHeap* b = new MaxHeap(arr, 7);
+  b->print();
+  b->buildHeap();
+  b->print();
+  heapSort(arr, 7);
+  printArr(arr, 7);
 }
