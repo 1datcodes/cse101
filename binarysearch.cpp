@@ -20,8 +20,8 @@ void print(int a[], int n) {
 }
 
 int main() {
-  int a[5] = {1, 2, 3, 4, 5};
-  print(a, 5);
-  int i = binarySearch(a, 0, 5, 2);
+  int a[10] = {1, 2, 3, 4, 5, 8, 9, 12, 24, 35};
+  print(a, 10);
+  int i = binarySearch(a, 0, 10, 9);
   cout << i << endl;
 }

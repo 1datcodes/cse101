@@ -109,3 +109,11 @@ Binary Max Heap:
   - Shape property: it is a complete binary tree: every level is full except possibly the last, and the last level is filled from the left with no gaps
   - Heap-order property: every node's key is >= the keys of its children. So the maximum is always at the root
   * a heap does not order the left child against the right child, so you cannot search it quickly. It is only ordered along each root-to-leaf path.
+
+  Implementations:
+    Array implementations
+      - Because the tree is complete there are no gaps, so we can store it by level in an array, with no pointers. We leave a[0] unused so that the index formulas are simple.
+      - Formulas
+        - Parent: i/2 (integer division), valid when i > 1 (the root has no parent)
+        - Left child: 2 * i, valid when 2i <= n
+        - Right child: 2 * i + 1, valid when 2i + 1 <= n
