@@ -147,3 +147,35 @@ Practice 4:
     - Since max-heap only care about parent-child relation and not sibling relations, left or right child can be the smallest. Therefore a divide and conquer approach is dangerous. Minimum is always a leaf node and there are about n/2 leaves therefore finding minimum will require O(n) time.
 
 BuildHeap and Heapsort:
+  BuildHeap: building a heap from an array
+    Given an unordered array a[1...n], we want to rearrange it in place into a max-heap.
+    Two natural ways:
+      - Bottom-up with sink (standard heapify)
+        ``
+        void buildHeap() { // a[1...n] holds arbitrary data
+            for (int i = n; i >= 1; i--) { // from the last node up to the root
+                sink(i);
+              }
+        }
+        ``
+      - Top-down with swim (repeated insertion)
+        ``
+        void buildHeap() { // "insert" a[1...n] one by one
+            for (int i = 1; i <= n; i++) {
+                swim(i);
+            }
+        }
+        ``
+      * Heaps built from the same data are not unique -> different implementations can yield different results
+    Analysis of buildHeap:
+      - Bottom-up (sink): O(n)
+        sink(i) consts at most the height of node i (how far it can fall). Most nodes are near the bottom and have a small height.
+        In general there are at most n/2^(h+1) nodes of height h, so the total work is at most sum(h*n/2^(h+1)) = (n/2)*sum(h/2^h)<=(n/2)*2=n. Half the nodes do no work, a quarter do at most 1 step, an eight at most 2, etc. The total is O(n) for worst and average case.
+      - Top-down (swim): O(nlogn)
+        A node at depth d can swim up at most d levels. Most nodes are near the bottom, so they have the largest depth.
+        About n/2 nodes sit at depth~log_2(n), so the worst case (data already in increasing order) costs about (n/2)*log_2(n) swaps: O(nlogn)
+      * The difference comes from the triangular structure of binary heap where most nodes lives near the bottom.
+      ** Rule of thumb: when building from a whole array, use sink O(n). When items arrive one at a time, use swim O(logn) each.
+
+  Heapsort:
+    Idea: build a max-heap, then repeatedly take the maximum and put it at the end. After each extraction the heap is one element smaller, so the freed slot at the end holds the extracted maximum, and the array fills up with the sorted output from the back.
