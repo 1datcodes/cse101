@@ -65,4 +65,47 @@ Practice 2:
     - Because BS relies on a sorted array to navigate
 
 Priority Queues:
+  A priority queue stores items with priorities and always gives access to the item of highest priority. (larger key = higher priority, max-priority queue)
+  Operations:
+    insert(x): adds item x to the queue.
+    findMax(): returns the largest item without removing it.
+    extractMax(): removes and returns the largest item.
+  Same ADT can be implemented in different ways and the choice decides which operations are cheap
+
+  Comparing implementations:
+    Unsorted Array:
+      insert - O(1) (append)
+      findMax - O(n)
+      extractMax - O(n)
+    Sorted array (max at end):
+      insert - O(n) (shift)
+      findMax - O(1)
+      extractMax - O(1)
+    Unserted linked list:
+      insert - O(1) (at head)
+      findMax - O(n)
+      extractMac - O(n)
+    Sorted linked list (max at head):
+      insert - O(n) (walk to position)
+      findMax - O(1)
+      extractMax - O(1)
+    Binary heap:
+      insert - O(logn)
+      findMax - O(1)
+      extractMax - O(logn)
   
+Practice 3:
+  1: A PQ is implemented with a sorted linked list with the maximum at the head. Give the worst-case time of findMax, insert, and extractMax, with a reason for each.
+    - insert: O(n), key is less than all the elements in the PQ, which means insert must walk to the end of the linked list to append
+    - findMax: O(1), since PQ is sorted with max at the head, accessing max takes O(1) time
+    - extractMax: O(1), same as above; linking the head to the second element also takes constant time
+  2: Fill in the worst-case time for an unsorted array PQ and binary heap PQ: (a) insert, (b) findMax, (c) extractMax
+    (a) O(1) for unsorted array, O(logn) for binary heap
+    (b) O(n) for unsorted array, O(1) for binary heap
+    (c) O(n) for unsorted array, O(logn) for binary heap
+
+Binary Max Heap:
+  A binary tree that satisfies two invariants at all times:
+  - Shape property: it is a complete binary tree: every level is full except possibly the last, and the last level is filled from the left with no gaps
+  - Heap-order property: every node's key is >= the keys of its children. So the maximum is always at the root
+  * a heap does not order the left child against the right child, so you cannot search it quickly. It is only ordered along each root-to-leaf path.
