@@ -1,0 +1,39 @@
+Sorting:
+  Selection sort:
+    Best, worst, and average case of O(n^2) since inner loop runs the whole span of the array regardless of the value.
+    Number of swaps is at most n-1 (one per pass);
+
+  Insertion sort:
+    Best case O(n), Worst case O(n^2), and average case O(n^2)
+    Number of shifts equals the number of inversions. A sorted array has 0 inversions; a reversed array has the max of n(n-1)/2 inversions.
+
+Practice 1:
+  1: Run selection sort on {8, 5, 9, 2, 6}. Write the array after each pass and the number of comparisons made in each pass.
+    - {2, 5, 9, 8, 6} 4 comparisons
+    - {2, 5, 9, 8, 6} 3 comparisons
+    - {2, 5, 6, 8, 9} 2 comparisons
+    - {2, 5, 6, 8, 9} 1 comparisons
+    - sorted! 10 comparisons total, 2 swaps total.
+  2: How many comparisons does selection sort make on a sorted array of 8 elements? On a reversed array of 8 elements?
+    - Number of comparisons depends entirely on n and not on the data. Both cases selection sort will compare n(n-1)/2 times or 28.
+  3: Run insertion sort on {2, 3, 1}. How many shifts happen? How many inversions does the array have?
+    - {2, 3, 1} no shifts
+    - {1, 2, 3} 2 shifts
+    - array has 2 inversions (3, 1) and (2, 1)
+  4: Give and input of size n=6 that is a worst case for insertion sort and state the total number of shifts.
+    - {6, 5, 4, 3, 2, 1}
+    - number of shifts would equal n(n-1)/2 which is 15
+  5: Count how many times count++ executes, as a function of n, and give O()
+    ``
+    for (int i = 0; i < n; i++) {
+        for (int j = i; j < n; j++) {
+            count++;
+        }
+    }
+    ``
+    - count++ will run n(n-1)/2 times which means time complexity of O(n^2)
+
+  6: Why is the number of comparisons fixed for selection sort but variable for insertion sort?
+    - because selection sort must span the entire unsorted array for the minimum, but insertion sort only needs to find the correct position for the key.
+
+Binary Search:
