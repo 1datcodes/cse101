@@ -179,3 +179,58 @@ BuildHeap and Heapsort:
 
   Heapsort:
     Idea: build a max-heap, then repeatedly take the maximum and put it at the end. After each extraction the heap is one element smaller, so the freed slot at the end holds the extracted maximum, and the array fills up with the sorted output from the back.
+    Ex:
+      start     16 4 10 2 1 9 3 |       heap built
+      1         10 4 9 2 1 3 | 16       16 to the end; 3 sinks past 10, then 9
+      2         9 4 3 2 1 | 10 16       10 to the end; 4 sinks past 9
+      3         4 2 3 1 | 9 10 16       9 to the end; 1 sinks past 4, then 2
+      4         3 2 1 | 4 9 10 16       4 to the end
+      5         2 1 | 3 4 9 10 16       3 to the end
+      6         1 | 2 3 4 9 10 16       2 to the end; sorted
+    
+    Time complexity:
+      Phase 1: build
+        O(n), from the buildHeap analysis
+      Phase 2:
+        n - 1 rounds; each does one O(1) swap and one sink of cost O(logn). The total is at most O(nlogn). Simple bound: (n-1)*logn
+      Total: O(nlogn) in the worst case, which is much better than the O(n^2) of selection and insertion sort in the worst case
+
+Practice 5:
+  1: Build a max-heap from {2, 8, 5, 3, 9, 1} using bottom-up buildHeap with sink. Show the array after each sink call and the total number of swaps
+    - i = 6, {2, 8, 5, 3, 9, 1} no child, nothing to do
+    - i = 5, {2, 8, 5, 3, 9, 1} no child, nothing to do
+    - i = 4, {2, 8, 5, 9, 3, 1} 3 swaps with 9
+    - i = 3, {2, 8, 5, 9, 3, 1} parent (5) larger than children (1)
+    - i = 2, {2, 9, 5, 8, 3, 1} 8 swaps with 9
+    - i = 1, {9, 8, 5, 2, 3, 1} 2 swaps with 9, then swaps with 8
+  2: Continue from {9, 8, 5, 3, 2, 1} and perform the first two rounds of heapsort. Write the array after each round
+    - Round 1: {1, 8, 5, 3, 2 | 9} max swap with last. sink(i) -> 1 swaps with 8, then with 3
+      {8, 3, 5, 1, 2 | 9}
+    - Round 2: {2, 3, 5, 1 | 8, 9} max swap with last. sink(i) -> 2 swaps with 5
+      {5, 3, 2, 1 | 8, 9}
+  3: Why does ascending heapsort use a max-heap and not a min-heap?
+    - because it grabs the maximum and swaps to the end of the array which is its final position. A max-heap allows O(1) time to extract the maximum element.
+  4: What is the maximum number of swaps bottom-up buildHeap can do on a perfect heap with 31 nodes?
+    - 16 leaves, 8 of h=1, 4 of h=2, 2 of h=3, and 1 h=4 -> 26 swaps total ????
+  5: A student argues: "bottom-up buildHeap makes n/2 calls to sink and each is O(logn), so heapify is O(nlogn)" what is wrong with the argument?
+    - it is a valid upper bound, but not tight enough. Each sink costs at most the height of its node, not the height of the whole tree. Most nodes have small height, and summing the actual costs gives a better O(n) time.
+
+
+Binary Tree:
+  A tree sorts data in nodes connected by edges. One special node, root, sits at the top and every other node hangs below exactly one parent.
+  In a binary tree every node has at most two children, called left child and right child.
+  Trees are naturally recursive: each child is the root of a smaller tree (a subtree). This is why most tree algorithms are written recursively.
+
+  Terms:
+    Root: The topmost node; the only node with no parent
+    Parent/child: a node directly above/directly below another node
+    Siblings: Nodes that share the same parent
+    Leaf: A node with no children
+    Internal Node: a node with at least one child
+    Ancestor: a node on the path from a node up to the root
+    Descendant: a node below a node
+    Subtree: a node together with all of its descendants. The left subtree and right subtree of a node are the subtrees rooted at its children
+    Depth of a node: Number of edges on the path from the root to the node
+    Height of a node: Number of edges on the longest downward path from the node to a leaf
+    Height of a tree: the height of its root
+    Level: All nodes at the same depth
