@@ -1,0 +1,16 @@
+Hash Tables
+Context: Balanced BST operations are mostly O(logn)
+Goal of Hash Table: conduct the same operations (insert, find, delete) in O(1) time with high probability
+
+How it works:
+  - map the data/key to an index in an array; since arrays have constant access to any index, insert/find/delete should be O(1) for most cases
+  - Ideally no two different data should produce the same index value -> then each item can be placed in a unique place in the array
+  - Time complexity depends on the efficiency of the Hash function
+Hash Function:
+  - A function that takes an item and generated an index for the array
+  - Must not generate the same index for two different items (or at least do so with very low probability)
+Hash collision:
+  - when hash function generates the same index for different items
+  - different ways to deal with this
+    - store all items as a linked list with the head stored in the hash table; this way when there is hash collision, new items can be appended at the same hash index
+    - linear probing: keep searching until the next empty slot -> destroys the find function; works well when the hash array is very very large

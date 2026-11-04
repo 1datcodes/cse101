@@ -1,0 +1,29 @@
+Range Search (BST):
+            50
+           /  \
+          30   80
+         / \   / \
+        20 40 70  90
+               \
+               75
+  Given range [low, high],
+  How many nodes are within the range?
+  Ex: [70, 80] -> 4
+  
+  Naive approach: traverse the entire tree and count up how many fall within the range -> O(n) time
+  Target O(h) where h is the height of the tree at the root
+    - Start from root like any tree operation
+    - Compare root with the range
+      - root < low: recursive call to the right of the tree
+      - low <= root <= high: eventually it will reach this case (base case)
+      - high < root: recursive call to the left of the tree
+    - Base Case:
+      Add each of the following
+      - # of nodes greater than or equal to low but smaller than start->key
+      - # of nodes smaller than or equal to high but greater than start->key
+      - +1
+
+Range Search (incomplete):
+  How many nodes are larger/smaller than x?
+  - root does not satisfy the condition -> try again on one side
+  - root does satisfy -> go until a node doesn't satisfy, then count
