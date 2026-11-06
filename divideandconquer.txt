@@ -1,0 +1,68 @@
+Divide and Conquer:
+  a process of making the problem into smaller subproblems that are easier to solve.
+  Steps:
+  1. Divide the problem into smaller subproblems
+  2. Solve each subproblem independently
+    - if small enough (base case) return solution
+    - otherwise solve recursively using D&C
+  3. Combine th solutions of the subproblems to get the final solution
+
+Applications:
+Sorting an array using divide and conquer --> merge sort
+  Merge Sort:
+  1. Divide: split the array into two halves L, R
+  2. Conquer: L = MergeSort(L); R = MergeSort(R); base case->array with one element
+  3. Combine: Merge(L, R)
+
+``
+void merge(int a[], int tmp[], int lo, int mid, int hi) {
+    int i = lo, int j = mid + 1, int h = lo;
+    while (i <= mid && j <= hi) {
+        if (a[i] <= a[j]) {
+            tmp[h] = a[i];
+            i++;
+            h++;
+        } else {
+            tmp[h] = a[j]; 
+            j++;
+        }
+    }
+    while (i <= mid) {
+        tmp[h] = a[i];
+        i++;
+        h++;
+    }
+    while (j <= hi) {
+        tmp[h] = a[j];
+        j++;
+        h++;
+    }
+}
+
+MergeSort (A, lo, hi) {
+    mid = lo + hi / 2;
+    L = MergeSort(A, lo, mid);
+    R = MergeSort(A, mid + 1, hi);
+    A = Merge(L, R);
+}
+``
+
+Time Complexity:
+  T(n) = 2T(n/2) + cn
+       = 2(2T(n/4) + cn/4) + cn
+       = 4T(n/4) + 2cn
+       = 2^k T(n/2^k) + kcn
+  k = log_2(n) ^ dividing is done in O(logn), but merge is done in O(n), therefore MergeSort is O(nlogn)
+Space Complexity:
+  In-space sort -> O(logn) or O(1) space
+  Stable sort -> preserve order of equal elements --> if two items have the same key, the order they appear in the input is preserved
+
+
+Quick Sort:
+  1. Divide: pick a pivot element. Put all elements smaller than pivot to its left, and the larger elements to right
+  2. Conquer: solve subproblems
+  3. Combine: nothing to do
+  
+  Time Complexity:
+    Tricky to determine since size of subproblems is not fixed
+    T(n) = T(k) + T(n - k - 1) + cn
