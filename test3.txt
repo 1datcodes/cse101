@@ -1,0 +1,22 @@
+Tree Traversal:
+  - Preorder:
+    Node, Left, Right: The node comes before the subtrees. The first node printed is always the root.
+  - Postorder:
+    Left, Right, Node: The node comes after the subtrees. The last node printed is always the root.
+  - Inorder:
+    Left, Node, Right: The node comes in between the subtrees. It will be printed in sorted order.
+  Time complexity:
+    Since all functions traverse the entire tree, each function is in O(n) time.
+Tree reconstruction:
+  Inorder alone is not enough information to reconstruct the BST since there are multiple permutations of trees with the same sorted output
+  Preorder alone is enough information to reconstruct the BST
+    Since preorder prints root first, left subtree, then right subtree, we can compare with the root to determine which subtree a node belongs in.
+  Postorder alone is also enough
+
+Practice:
+  1.1
+    Preorder: [50, 30, 20, 45, 40, 70, 80, 75];
+    Inorder: [20, 30, 40, 45, 50, 70, 75, 80];
+    Postorder: [20, 40, 45, 30, 75, 80, 70, 50];
+  1.2:
+    see ipad notes
