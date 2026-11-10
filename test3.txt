@@ -20,3 +20,30 @@ Practice:
     Postorder: [20, 40, 45, 30, 75, 80, 70, 50];
   1.2:
     see ipad notes
+
+AVL Trees:
+  BST operations all cost O(h) but unbalanced trees means h=n for worst case scenario. (i.e. O(n))
+  Self balancing trees guarantee average case O(h) (O(logn)) time
+  Invariant:
+    Difference between the heights of the left and right subtrees are no more than -1 to 1
+    Every node of the tree follows above invariant
+  It allows a small amount of lopsidedness which makes maintaining the tree fairly cheap
+  Nodes increase exponentially with every level -> O(h)=O(logn)
+  Rotations:
+    Constant time local rearrangement that restores balance: O(1)
+    Transfers the height from one side to the other
+    Preserves the BST order of the tree
+  4 imbalance cases:
+    RR: one left rotation
+    LL: one right rotation
+    RL: right rotation at y, then left rotation at z
+    LR: left rotation at y, then right rotation at z
+    Rebalance function handles all 4 cases
+  Find works the same way as BST, guaranteed O(logn) due to auto-balancing
+  Insert:
+    insert like regular BST, then on the way back up the recursion, repair every ancestor with rebalance
+  Delete:
+    delete like regular BST, then repair every ancestor on the way back
+
+Practice:
+  2.1:

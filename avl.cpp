@@ -24,6 +24,20 @@ Node* search(Node* root, int val) {
   }
 }
 
+Node* rotate_right(Node* z) {
+  Node* y = z->left;
+  Node* B = y->right;
+  y->right = z;
+  z->left = B;
+  update(z); // update lower node first
+  update(y);
+  return y;
+}
+
+Node* rotate_left(Node* left) {
+
+}
+
 void insert(Node* root, Node* n) {
   // must balance the tree after inserting
 }
