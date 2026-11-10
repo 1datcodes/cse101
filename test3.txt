@@ -91,3 +91,58 @@ Range counting in AVL tree
     We do not need a new algorithm. The keys in [a, b] are the keys <= b minus keys < a
     Complexity:
       Two one-ended queries each on O(logn) time -> O(logn) time
+
+
+Hash Tables:
+  Motivation: find the key in O(1)
+  If the key is a small number then make an array that fits all the keys and make the index = key
+  However real keys are not small or not a number -> need an algorithm to shorten/convert keys to index
+  Hash table consist of two things:
+    1. Array of size m (its entries called buckets)
+    2. A hash function h that turns any key into an index between 0 and m-1
+    h(x) returns the index of x in which we store the key -> O(1) time for insertion, deletion, and search
+  Hash functions:
+    A good has function should be:
+    - Deterministic: The same key always returns the same hash
+    - Fast: computing should take O(1) time
+    - Well spread: keys should land evenly over all m slots, so that no slot gets crowded
+    Examples:
+    - Division method: h(k) = k mod m. Simplest hash function
+    - Strings: Treat the characters as digits of a number written in base 31, then reduce modulo m as we go
+  Hash collisions:
+    A collision happens when two different keys have the same has values; h(k1) == h(k2)
+    Collisions cannot be avoided as long as # keys > # slots
+      - Pigeonhole priciple
+      - Even with few keys, collisions are common: birthday paradox
+    Collision handling:
+      1. Chaining: Each slot holds a linked list of all the keys that hash to it. A collision simply makes the list longer
+        - Insert(k): compute i = h(k) and add k at the head of the list; O(1)
+        - Find(k): compute i = h(k) and scan the list for k
+        - Delete(k): compute i = h(k) and find k in the list, then unlink
+        Cost:
+          Cost to find insert and delete is cost of h(k) plus time to scan one list -> depends on the length of the list.
+          Load factor a = n / m (keys stored divided by slots). If the has function spreads keys evenly average list length is a.
+          Average case: O(1 + a) -> if a is small this is O(1)
+          Worst case: O(n) if all keys happen to has to one slot -> basically just a linked list
+      2. Open addressing with linear probing:
+        No nested lists and arrays; all keys are directly stored in the table.
+        If slot h(k) is already taken, we look at the next slot, then next, and so on wrapping around at the end of the array until we find a place (probe sequence).
+        - Insert(k): follow the probe sequence and put k in the first free slot
+        - Find(k): follow the same probe sequence. If we see k, found it. If we reach an empty slot, or we finish the probe sequence, k is not in the table
+        Clustering:
+          When collisions happen, it creates one long block in the table which makes collisions more likely; primary clustering
+        Deleting needs a marker:
+          Since empty slots cut off find(k), deleting a key needs an indicator (tombstone) to signify the chain is continuing.
+        Cost of linear probing:
+          Cost is the number of slots probed which depends heavily on the load factor a = n/m
+          Linear probing is very fast while the table is at most about half to two-thirds full
+          Real implementation resize: when a passes a threshold, allocate a bigger array (usually 2x)
+
+  Hash vs BST:
+    - Hash table gives faster find, insert, and delete in O(1) average
+    - Hash table keeps no order, min, or max. BST can find these much faster (O(logn))
+    - BST guarantees O(logn) in worst-case vs O(n) worst case
+
+
+Merge sort:
+  Divide and conquer algorithm.
