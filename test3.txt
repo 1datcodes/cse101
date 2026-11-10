@@ -44,6 +44,50 @@ AVL Trees:
     insert like regular BST, then on the way back up the recursion, repair every ancestor with rebalance
   Delete:
     delete like regular BST, then repair every ancestor on the way back
+  AVL Tree costs:
+    Find: O(logn)
+    Insert: O(logn)
+    Delete: O(logn)
+    Rotation: O(1)
+    Build from n keys: O(nlogn)
+    Inorder traversal: O(n)
 
 Practice:
   2.1:
+    Not an AVL tree. Node 40 has bf -2. Case RR->left rotation by one to fix
+  2.4:
+    Smallest number of nodes in height 6 -> 2^(6-1) + 1 = 33
+    Largest height an AVL tree with 20 nodes -> log_2(20) ~ 4.32 -> 5 levels
+      or 2^(5-1) + 1 = 17 < 20 so 4+1 levels
+  2.5:
+    Write a recursive function bool is_avl(Node* root) that returns true if a given binary tree is an AVL tree. Do not use the stored height field. It should run in O(n)
+    ``
+    int check(Node* n) {
+        if (n == NULL) return -1;
+        int l = check(n->left);
+        if (l == -2) return -2;
+        int r = check(n->right);
+        if (r == -2) return -2;
+        if (abs(l - r) > 1) return -2;
+        return 1 + max(l, r);
+      }
+    bool is_avl(Node* root) {
+        return check(root) != -2;
+      }
+    ``
+
+Range counting in AVL tree
+  One-ended range: how many keys are <= x (or >=, >, <)
+  Both-ended range: how many keys are in [a, b]
+  Standard way is to walk through and count which is O(k) where k<=n.
+  We can do O(log n) if nodes remembered how many nodes are in its subtree
+  - One-ended range: count keys <= x
+    At each node, compare x with the node key
+    - x < key: the node and everything in its right subtree are larger than x, so none of them counts; continue only on left subtree
+    - x >= key: the node counts, and so does everything in its left subtree (all smaller than node) -> 1 + size_of(node->left) keys, added in O(1). Then continue on the right subtree for the rest
+    Complexity:
+      Every call makes at most one recursive call, and each does O(1) work -> function follows a signle root-to-leaf path which means at most h + 1 calls == O(logn)
+  - Both-ended range: count the keys in [a, b]
+    We do not need a new algorithm. The keys in [a, b] are the keys <= b minus keys < a
+    Complexity:
+      Two one-ended queries each on O(logn) time -> O(logn) time
