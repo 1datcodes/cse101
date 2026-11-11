@@ -146,3 +146,39 @@ Hash Tables:
 
 Merge sort:
   Divide and conquer algorithm.
+  Divide the array into halves until only 1 element, combine arrays on the way back to sort
+  Time complexity:
+   - O(nlogn) (best, average, and worst case)
+     T(n) = 2T(n/2) + cn
+          = 4T(n/4) + c(n/4) + 2cn
+          = 8T(n/16) +c(n/8) + 3cn ... 2^k T(n/2^k) + kcn
+     k ~ log_2(n)
+
+Quicksort:
+  Divide and conquer algorithm
+  Unlike merge sort where most of the work happens when merging, quicksort does most of the work when dividing
+  Pivot:
+    chose a pivot element, rearrange the array so that everything smaller than the pivot is on the left, and everything larger than the pivot is on the right of the pivot
+  Conquer:
+    sort the left and right part recursively
+  Combine:
+    Nothing to do since array is already sorted
+  Choice of pivot:
+    Any element can serve as the pivot but the choice affects the speed (in class pivot is always the first element of the range)
+  Time complexity:
+    The cost of one call on n elements is the partition, c n. The recursion afterwards depends where the pivot lands
+    Running time depends on how balanced the split is
+    Best case: pivot splits the range in half
+      essentially the same as merge sort -> O(nlogn)
+    Worst case: pivot is always the smallest or the largest
+      basically bubble sort -> O(n^2)
+    Average case: the splits are usually good enough
+      even with unbalanced split the partition is still O(logn) -> O(nlogn) for the total
+
+Space and stableness:
+  Merge sort:
+    Not in-place sort. tmp array takes O(n) space plus recursion.
+    It is stable. equal keys keep their original order
+  Quicksort:
+    in-place sort. no additional array is required.
+    Not stable. equal keys are not guaranteed to be in the same orientation
